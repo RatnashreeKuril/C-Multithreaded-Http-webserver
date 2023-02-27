@@ -1,0 +1,94 @@
+#ifndef __$__tmwp__
+#define __$__tmwp__ 1234
+#include<iostream>
+#include<map>
+using namespace std;
+class Request
+{
+prublic:
+char *method;
+char *resource;
+char *mimeType;
+char isClientSideTechnologyResource;
+int dataCount;
+char **data;
+};
+namespace tmwp
+{
+class Comparator
+{
+public:
+bool operator()(string *,string *);
+};
+class Response
+{
+private:
+int clientSocketDescriptor;
+char *mimeType;
+int headerSent;
+public:
+Response(int clientSocketDescriptor);
+void write(const string &);
+void close();
+~Response();
+};
+class Request
+{
+private:
+class Data
+{
+public:
+char * key;
+char * value;
+Data();
+~Data();
+};
+char *method;
+char *resource;
+char *mimeType;
+char isClientSideTechnologyResource;
+int dataCount;
+int clientSocketDescriptor;
+map<string *,Data *,Comparator>dataMap;
+char *forwardedResource;
+public:
+Request();
+Request(REQUEST *);
+~Request();
+void setInt(const char * ,int);
+int getInt(const char *);
+string getMethod();
+void setResource(char *);
+string getResource();
+string getMimeType();
+int getDataCount();
+string get(const char *);
+void forward(const char *resource);
+friend class TMWebProjector;
+};
+class TMWebProjector
+{
+private:
+class UrlData
+{
+public:
+char *url;
+void(*ptrOnRequest)(Request &, Response &);
+UrlData();
+~UrlData();
+};
+int portNumber;
+class DataModel
+{
+public:
+map<string *,UrlData*, Comparator>urlAndPtrOnRequestMap;
+};
+DataModel dataModel;
+public:
+TMWebProjector(int portNumber);
+~TMWebProjector();
+void start();
+void onRequest(const char *url,void (*ptrOnRequest)(Request &, Response &));
+};
+}
+#endif

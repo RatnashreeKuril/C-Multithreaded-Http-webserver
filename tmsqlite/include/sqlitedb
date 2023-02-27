@@ -1,0 +1,66 @@
+#ifndef __$__sqlitedb__
+#define __$__sqlitedb__ 456
+#include<iostream>
+#include<sqlite3.h>
+#include<sqliteexception>
+#include<map>
+#include<forward_list>
+using namespace std;
+namespace sqlite
+{
+class Row
+{
+private:
+class Comparator
+{
+public:
+bool operator()(string left, string right);
+};
+map<string ,string , Comparator>*columns;
+public:
+Row();
+Row(const char *,const char *);
+Row(const Row &);
+~Row();
+void insertColumn(char *, char *);
+int getInteger(const string &);
+string getString(const string &);
+};
+class Rows
+{
+private:
+forward_list<Row*> *list;
+int size;
+public:
+Rows();
+Rows(forward_list<Row*>*);
+Rows(const Rows &);
+~Rows();
+void insertRow(const Row &);
+Row getRow();
+bool hasMoreRows();
+};
+class SqliteDB
+{
+private:
+sqlite3 *db;
+string sql;
+char *errorMessage;
+int resultCode;
+public:
+SqliteDB() throw(SQLiteException);
+SqliteDB(const string &) throw(SQLiteException);
+SqliteDB(const SqliteDB &) throw(SQLiteException);
+~SqliteDB() throw(SQLiteException);
+SqliteDB & operator=(const string &) throw(SQLiteException);
+void open(const string &) throw(SQLiteException);
+int getGeneratedID() throw(SQLiteException);
+void executeInsert(const string &) throw(SQLiteException);
+void executeUpdate(const string &) throw(SQLiteException);
+void executeRemove(const string &) throw(SQLiteException);
+forward_list<Row *> * selectRows(const string &) throw(SQLiteException);
+int isOpen() throw(SQLiteException);
+void close() throw(SQLiteException);
+};
+}
+#endif

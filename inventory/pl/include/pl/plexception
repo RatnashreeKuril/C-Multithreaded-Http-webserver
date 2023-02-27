@@ -1,0 +1,33 @@
+#ifndef __$__plexception__pl
+#define __$__plexception__pl 1234
+#include<iostream>
+#include<map>
+using namespace std;
+namespace inventory
+{
+namespace presentation_layer
+{
+class PLException:public exception
+{
+string genericException;
+map<string,string> exceptions;
+public:
+PLException();
+PLException(string genericException);
+PLException(const PLException &other);
+virtual~PLException() throw();
+PLException & operator=(const PLException &other);
+const char * what() const throw();
+int hasGenericException();
+void setGenericException(string genericException);
+string getGenericException();
+void addPropertyException(string property,string exception);
+string getPropertyException(string property);
+int hasPropertyException(string property);
+int hasPropertyExceptions();
+int hasExceptions();
+int getPropertyExceptionsCount();
+};
+}
+}
+#endif

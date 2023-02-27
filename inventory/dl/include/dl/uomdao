@@ -1,0 +1,41 @@
+#ifndef __$__uomdao__dl
+#define __$__uomdao__dl 1234
+#include<iostream>
+#include<dl/iuom>
+#include<dl/uom>
+#include<dl/iuomdao>
+#include<dl/daoexception>
+#include<forward_list>
+using namespace std;
+namespace inventory
+{
+namespace data_layer
+{
+class UnitOfMeasurementDAO:public abc::IUnitOfMeasurementDAO
+{
+class Header
+{
+public:
+int lastGeneratedCode;
+int numberOfRecords;
+};
+class _UnitOfMeasurement
+{
+public:
+int code;
+char title[51];
+};
+public:
+void add(abc::IUnitOfMeasurement * UnitOfMeasurement) throw(DAOException);
+void update(abc::IUnitOfMeasurement * UnitOfMeasurement) throw(DAOException);
+void remove(int code) throw(DAOException);
+abc::IUnitOfMeasurement * getByCode(int code) throw(DAOException);
+abc::IUnitOfMeasurement * getByTitle(string title) throw(DAOException);
+forward_list<abc::IUnitOfMeasurement *> *getAll() throw(DAOException);
+int getCount() throw(DAOException);
+int codeExists(int code) throw(DAOException);
+int titleExists(string title) throw(DAOException);
+};
+}
+}
+#endif

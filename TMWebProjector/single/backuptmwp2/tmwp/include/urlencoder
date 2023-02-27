@@ -1,0 +1,9 @@
+namespace tmwp
+{
+class URLEncoder
+{
+public:
+static char *encoder(const char * query);
+static char * decoder(const char * query);
+};
+}

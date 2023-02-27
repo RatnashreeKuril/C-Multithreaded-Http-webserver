@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<string.h>
+#include<iostream>
+using namespace std;
+int main()
+{
+int i,rc;
+long fileLength;
+char responseBuffer[1024];
+char tmp[3000];
+FILE * file=fopen("ErrorPage.tpl","rb");
+if(file==NULL)
+{
+printf("File does not exists");
+return 0;
+}
+FILE * tmpFile=fopen("ErrorPage.tpl.cpp","wb");
+fseek(file,0,2);
+fileLength=ftell(file);
+fseek(file,0,0);
+i=0;
+int dc=0;
+char header[100];
+strcpy(header,"#include<tmwp>\n");
+strcat(header,"using namespace tmwp\n");
+strcat(header,"void getErrorPage_TPL(Request & request, Response & response)\n");
+strcat(header,"{\n");
+fwrite(header,strlen(header),1,tmpFile);
+while(i<fileLength)
+{
+rc=fileLength-i;
+if(rc>1024) rc=1024;
+fread(&responseBuffer, rc, 1, file);
+responseBuffer[rc]='\0';
+int e=0;
+int si;
+while(responseBuffer[e]!='\0')
+{
+dc=0;
+if(responseBuffer[e]=='$' && e<=rc)
+{
+si=e;
+e++;
+dc++;
+while(responseBuffer[e]=='$' && e<=rc)
+{
+e++;
+dc++;
+}
+
+}
+
+if(dc==3 && e<=1024 && responseBuffer[e]=='{')
+{
+char a[10];
+int f=0;
+e++;
+while(responseBuffer[e]!='}')
+{
+a[f]=responseBuffer[e];
+e++;f++;
+}
+a[f]='\0';
+char b[f+20];
+sprintf(b,"request.getValue(\"%s\")",a);
+strncpy(tmp,responseBuffer,si);
+tmp[si]='\0';
+strcat(tmp,b);
+strcat(tmp,responseBuffer+e+1);
+strcpy(responseBuffer,tmp);
+f=0;
+}
+if(dc>0 && e>=1024)
+{
+break;
+}
+e++;
+}
+fwrite(responseBuffer,strlen(responseBuffer),1,tmpFile);
+i+=rc;
+}
+strcpy(header,"\n}\n");
+fwrite(header,strlen(header),1,tmpFile);
+fclose(file);
+fclose(tmpFile);
+printf("File generated\n");
+return 0;
+}

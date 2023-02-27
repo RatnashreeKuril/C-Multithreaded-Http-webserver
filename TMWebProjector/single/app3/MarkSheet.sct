@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>Marksheet</title>
+</head>
+<body>
+Physics : ${physics}
+Chemistry : ${chemistry}
+Maths : ${maths} 
+Hindi : ${hindi} 
+English : ${english}
+</body>
+</html>

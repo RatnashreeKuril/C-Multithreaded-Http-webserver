@@ -1,0 +1,30 @@
+#ifndef __$__uommanager__pl
+#define __$__uommanager__pl 1234
+#include<iostream>
+#include<pl/iuom>
+#include<pl/uom>
+#include<forward_list>
+#include<map>
+#include<pl/iuommanager>
+using namespace std;
+namespace inventory
+{
+namespace presentation_layer
+{
+class UnitOfMeasurementManager : public abc::IUnitOfMeasurementManager
+{
+public:
+void addUnitOfMeasurement(abc::IUnitOfMeasurement *unitOfMeasurement) throw(PLException);
+void updateUnitOfMeasurement(abc::IUnitOfMeasurement *unitOfMeasurement) throw(PLException);
+void removeUnitOfMeasurementByCode(int code) throw(PLException);
+void removeUnitOfMeasurementByTitle(string &title) throw(PLException);
+abc::IUnitOfMeasurement *getUnitOfMeasurementByCode(int code) throw(PLException);
+abc::IUnitOfMeasurement *getUnitOfMeasurementByTitle(string &title) throw(PLException);
+forward_list<abc::IUnitOfMeasurement *> *getUnitOfMeasurements() throw(PLException);
+int UnitOfMeasurementCodeExists(int code) throw(PLException);
+int UnitOfMeasurementTitleExists(string &title) throw(PLException);
+int UnitOfMeasurementCount() throw(PLException);
+};
+}
+}
+#endif

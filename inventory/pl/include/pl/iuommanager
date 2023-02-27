@@ -1,0 +1,31 @@
+#ifndef __$__iuommanager__pl
+#define __$__iuommanager__pl 1234
+#include<iostream>
+#include<pl/iuom>
+#include<pl/uom>
+#include<forward_list>
+#include<pl/plexception>
+namespace inventory
+{
+namespace presentation_layer
+{
+namespace abc
+{
+class IUnitOfMeasurementManager
+{
+public:
+virtual void addUnitOfMeasurement(abc::IUnitOfMeasurement *unitOfMeasurement) throw(PLException)=0;
+virtual void updateUnitOfMeasurement(abc::IUnitOfMeasurement *unitOfMeasurement) throw(PLException)=0;
+virtual void removeUnitOfMeasurementByCode(int code) throw(PLException)=0;
+virtual void removeUnitOfMeasurementByTitle(string &title) throw(PLException)=0;
+virtual  abc::IUnitOfMeasurement *getUnitOfMeasurementByCode(int code) throw(PLException)=0;
+virtual abc::IUnitOfMeasurement *getUnitOfMeasurementByTitle(string &title) throw(PLException)=0;
+virtual forward_list<abc::IUnitOfMeasurement *> *getUnitOfMeasurements() throw(PLException)=0;
+virtual int UnitOfMeasurementCodeExists(int code) throw(PLException)=0;
+virtual int UnitOfMeasurementTitleExists(string &title) throw(PLException)=0;
+virtual int UnitOfMeasurementCount() throw(PLException)=0;
+};
+}
+}
+}
+#endif

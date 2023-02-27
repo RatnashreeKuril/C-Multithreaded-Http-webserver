@@ -1,0 +1,14 @@
+#ifndef __$__tmwp__
+#define __$__tmwp__ 1234
+namespace TMWP
+{
+class TMWebProjector
+{
+private:
+
+
+public:
+
+};
+}
+#endif

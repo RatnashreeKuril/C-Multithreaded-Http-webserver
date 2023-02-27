@@ -1,0 +1,13 @@
+request method type
+GET
+HEAD
+POST
+PUT 
+DELETE
+CONNECT
+OPTIONS
+TRACE
+PATCH
+The first word in the First Line of request contains the method part
+The second word in the second line contains the resourse name if the 
+request is Get / Post (As of now we are concerned about Get / Post only)

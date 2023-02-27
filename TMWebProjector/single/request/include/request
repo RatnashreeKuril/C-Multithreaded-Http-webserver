@@ -1,0 +1,14 @@
+#include<iostream>
+#include<map>
+#include<tmwp>
+using namespace std;
+namespace tmwp
+{
+class Request
+{
+private:
+REQUEST *request;
+public:
+string getRequest(const char *key);
+};
+}
